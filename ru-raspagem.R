@@ -2,6 +2,11 @@ library(tidyverse)
 library(dplyr)
 library(rvest)
 
+# Criar pasta dados se não existir
+if (!dir.exists("dados")) {
+  dir.create("dados")
+}
+
 data_coleta <- gsub("[[:space:]]+", "_", Sys.time())
 html <- read_html("https://proad.ufpr.br/ru/ru-centro-politecnico/", encoding = "utf-8")
 
@@ -38,7 +43,7 @@ cardapio <- cardapio %>%
 cardapio <- relocate(cardapio,tipo_refeicao)
 cardapio <- relocate(cardapio,data)
 
-write.csv(cardapio, paste0(data_coleta, ".csv"), 
+write.csv(cardapio, paste0("dados/",data_coleta, ".csv"), 
            row.names = FALSE,
            quote = TRUE,        
            na = "",              
